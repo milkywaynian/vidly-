@@ -56,9 +56,32 @@ app.post('/app/genres', (req, res) => {
         genres.push(newGenre);
         res.send(newGenre);
     }
+})
+
+app.put('/app/genres/:name', (req,res) => { 
+    //find the genre
+    const genre = genres.find(g => g.name === (req.params.name));
+    if (!genre) {
+          // if unavailable - show error
+        res.status(400).send("Genre not found")
+    } else {
+          // if found - input validation 
+
+        const {error} = validateGenre(req.body);
+        //if valid - add a new genre
+            if(error) {
+                res.status(400).send(error)
+            } else {
+                genre.name = req.body.name;
+                res.send(genre);
+            }
+    }
+
     
 
-    //send a response with a new genre with npm joi
+    // if found - input validation 
+
+
 })
 
 
