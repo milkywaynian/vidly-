@@ -74,15 +74,30 @@ app.put('/app/genres/:name', (req,res) => {
             } else {
                 genre.name = req.body.name;
                 res.send(genre);
-            }
-    }
-
-    
-
-    // if found - input validation 
+            }    }
 
 
 })
+
+app.delete('/app/genres/:name', (req,res) => {
+    //lookup the genres
+    const genreToDelete = genres.find(g => g.name === req.params.name);
+
+    //if unavailable - error
+
+    if(!genreToDelete) {
+        res.status(400).send("Genre is unavailable")
+        //if available - delete
+    } else {
+        //get the index of the genre
+        const genreIndex = genres.indexOf(genreToDelete);
+        //remove the genre
+        genres.splice(genreIndex, 1);
+        //send a genre in a response
+        res.send(genreToDelete);   
+    }
+
+}) 
 
 
 //input validation 
