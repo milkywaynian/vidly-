@@ -44,9 +44,19 @@ app.post('/app/genres', (req, res) => {
     //validate the input 
 
     const {error} = validateGenre(req.body);
-    res.send(error);
     //if valid - add a new genre
+    if(error) {
+        res.status(400).send(error)
+    } else {
+        const newGenre = {
+            name: req.body.name,
+            id: genres.length +1
+        }
 
+        genres.push(newGenre);
+        res.send(newGenre);
+    }
+    
 
     //send a response with a new genre with npm joi
 })
