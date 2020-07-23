@@ -1,11 +1,11 @@
 //load express
 const express = require("express"); 
-const Joi = require("joi");
 
 //store result of the express module in a variable
 const app = express();
 
-
+const Joi = require('joi');
+app.use(express.json());
 
 // create dummy genres
 
@@ -40,26 +40,29 @@ app.get('/app/genres/:name', (req, res) => {
 
 // post method 
 
-// app.post('/app/genres', (req, res) => {
-//     //validate the input 
+app.post('/app/genres', (req, res) => {
+    //validate the input 
 
-//     //if valid - add a new genre
+    const {error} = validateGenre(req.body);
+    res.send(error);
+    //if valid - add a new genre
 
 
-//     //send a response with a new genre with npm joi
-// })
+    //send a response with a new genre with npm joi
+})
 
 
 //input validation 
 
 function validateGenre (genre) {
-    const schema = {
-        name: Joi.string.min(2).required
-    }
+    const schema = Joi.object({
+        name: Joi.string().min(2).required()
+    });
 
-    return Joi.validate(genre, schema);
-
+    return schema.validate(genre);
 }
+
+
 
 
 
