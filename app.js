@@ -1,11 +1,18 @@
 //load express
 const express = require("express"); 
 
+//load a custom middleware from a module
+const logger = require('./logger');
+
 //store result of the express module in a variable
 const app = express();
 
 const Joi = require('joi');
 app.use(express.json());
+
+//export a middleware function
+
+app.use(logger);
 
 // create dummy genres
 
