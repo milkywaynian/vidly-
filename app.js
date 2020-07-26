@@ -8,9 +8,17 @@ const logger = require('./logger');
 const app = express();
 
 const Joi = require('joi');
+
+//built-in middleware that parses the body of the request and if there is a json object it will pre-populate req.body property 
 app.use(express.json());
 
-//export a middleware function
+//built-in middleware function - parses request with URL incoded variables
+
+app.use(express.urlencoded({extended : true}));
+
+app.use(express.static('public')); 
+
+//install a middleware function
 
 app.use(logger);
 
